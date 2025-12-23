@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import { zu } from '@/lib/zod/zod-utils';
+import { Description } from '@headlessui/react';
 
 export const zGoodieCategory = z.enum([
   'TSHIRT',
