@@ -191,6 +191,24 @@ export const zFormFieldsAsset = () =>
     supplierId: true,
   });
 
+//============ New Goodie Idea ============
+export type GoodieIdea = z.infer<ReturnType<typeof zGoodieIdea>>;
+export const zGoodieIdea = () =>
+  z.object({
+    id: z.string(),
+    name: zu.fieldText.required(),
+    category: zGoodieCategory,
+    description: z.string(),
+  });
+
+export type FormFieldsIdea = z.infer<ReturnType<typeof zFormFieldsIdea>>;
+export const zFormFieldsIdea = () =>
+  zGoodieIdea().pick({
+    name: true,
+    category: true,
+    description: true,
+  });
+
 //============ Grant ============
 export const zVariantKey = (allowedKeys: string[]) =>
   z
@@ -236,13 +254,4 @@ export const zGoodieListItem = z.object({
   category: zGoodieCategory,
   photoUrl: z.string().url().nullish(),
   totalStock: z.number().int().min(0).optional(), // calculé côté serveur
-});
-
-//============ New Idea ============
-
-export const zGoodieIdea = z.object({
-  id: z.string(),
-  name: zu.fieldText.required(),
-  category: zGoodieCategory,
-  description: z.string(),
 });
