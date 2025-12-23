@@ -2,26 +2,28 @@ import { z } from 'zod';
 
 import { zu } from '@/lib/zod/zod-utils';
 
-export const zGoodieCategory = z.enum([
-  'TSHIRT',
-  'HOODIE',
-  'STICKER',
-  'MUG',
-  'TOTE_BAG',
-  'NOTEBOOK',
-  'OTHER',
-]);
+export const zGoodieCategory = () =>
+  z.literal([
+    'TSHIRT',
+    'HOODIE',
+    'STICKER',
+    'MUG',
+    'TOTE_BAG',
+    'NOTEBOOK',
+    'OTHER',
+  ]);
 
-export const zGoodieOrderStatus = z.enum([
-  'IDEA',
-  'REQUESTED',
-  'QUOTED',
-  'ORDERED',
-  'RECEIVED',
-  'CANCELLED',
-]);
+export const zGoodieOrderStatus = () =>
+  z.literal([
+    'IDEA',
+    'REQUESTED',
+    'QUOTED',
+    'ORDERED',
+    'RECEIVED',
+    'CANCELLED',
+  ]);
 
-export const zAssetType = z.enum(['LOGO', 'MOCKUP', 'PHOTO', 'OTHER']);
+export const zAssetType = () => z.literal(['LOGO', 'MOCKUP', 'PHOTO', 'OTHER']);
 
 export type Goodie = z.infer<ReturnType<typeof zGoodie>>;
 
@@ -52,7 +54,7 @@ export const zGoodie = () =>
     id: z.string(),
     name: zu.fieldText.required(),
     edition: zu.fieldText.nullish(),
-    category: zGoodieCategory,
+    category: zGoodieCategory(),
     description: zu.fieldText.nullish(),
     photoUrl: z.string().url().nullish(),
 
@@ -131,7 +133,7 @@ export type GoodieOrder = z.infer<ReturnType<typeof zGoodieOrder>>;
 export const zGoodieOrder = () =>
   z.object({
     id: z.string(),
-    status: zGoodieOrderStatus,
+    status: zGoodieOrderStatus(),
 
     goodieId: z.string().nullish(),
     supplierId: z.string().nullish(),
@@ -169,7 +171,7 @@ export type Asset = z.infer<ReturnType<typeof zAsset>>;
 export const zAsset = () =>
   z.object({
     id: z.string(),
-    type: zAssetType,
+    type: zAssetType(),
     name: zu.fieldText.required(),
     url: z.string().url(),
     comment: zu.fieldText.nullish(),
@@ -197,7 +199,7 @@ export const zGoodieIdea = () =>
   z.object({
     id: z.string(),
     name: zu.fieldText.required(),
-    category: zGoodieCategory,
+    category: zGoodieCategory(),
     description: z.string(),
   });
 
@@ -251,7 +253,7 @@ export const zGoodieListItem = z.object({
   id: z.string(),
   name: zu.fieldText.required(),
   edition: zu.fieldText.nullish(),
-  category: zGoodieCategory,
+  category: zGoodieCategory(),
   photoUrl: z.string().url().nullish(),
   totalStock: z.number().int().min(0).optional(), // calculé côté serveur
 });
