@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import { zu } from '@/lib/zod/zod-utils';
+import { Description } from '@headlessui/react';
 
 export const zGoodieCategory = z.enum([
   'TSHIRT',
@@ -236,4 +237,13 @@ export const zGoodieListItem = z.object({
   category: zGoodieCategory,
   photoUrl: z.string().url().nullish(),
   totalStock: z.number().int().min(0).optional(), // calculé côté serveur
+});
+
+//============ New Idea ============
+
+export const zGoodieIdea = z.object({
+  id: z.string(),
+  name: zu.fieldText.required(),
+  category: zGoodieCategory,
+  description: z.string(),
 });
