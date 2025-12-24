@@ -171,24 +171,17 @@ export const FormIdeaNew = () => {
         <div className="flex flex-col gap-4" ref={rainbowRef1}>
           Ajouter une nouvelle idée :
           <div className="flex flex-col gap-4 xs:flex-row" ref={rainbowRef2}>
-            <div className="flex-2">
-              <Card>
-                <CardContent>
-          <div className="flex flex-col gap-4 xs:flex-row xs:items-stretch">
-            <div className="flex-1">
-              <Card className="h-full">
-                <CardContent className="h-full">
-                  <FormGoodieIdea />
-                </CardContent>
-              </Card>
-            </div>
-
-            <div
-              aria-hidden
-              className="mx-auto w-full max-w-64 min-w-48 flex-1"
-              ref={rainbowRef4}
-            >
-              <GiftIcon />
+            <Card className="h-full">
+              <CardContent className="h-full">
+                <FormGoodieIdea />
+              </CardContent>
+            </Card>
+          </div>
+          <div
+            aria-hidden
+            className="mx-auto w-full max-w-64 min-w-48 flex-1"
+            ref={rainbowRef4}
+          >
             <div className="flex-1">
               <img
                 src="https://www.billboard.com/wp-content/uploads/2023/05/01-taylor-swift-eras-b-billboard-1548.jpg?w=942&h=623&crop=1"
