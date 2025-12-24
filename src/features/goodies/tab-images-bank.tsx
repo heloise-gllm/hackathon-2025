@@ -82,18 +82,28 @@ export default function GoodieAssetsTab() {
     <div className="space-y-6">
       <FormProvider {...form}>
         {/* ADD IMAGE CARD */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-4">
-              <ImageIcon />
-              Ajouter une image
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4 p-6">
-            <FormImage />
-            <Button onClick={onSubmit}>Ajouter</Button>
-          </CardContent>
-        </Card>
+        <div className="flex flex-col gap-4 xs:h-96 xs:flex-row xs:items-stretch">
+          <Card className="flex min-h-0 flex-1 flex-col">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-4">
+                <ImageIcon />
+                Ajouter une image
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="flex h-full flex-col justify-between space-y-4 p-6">
+              <FormImage />
+              <Button onClick={onSubmit}>Ajouter</Button>
+            </CardContent>
+          </Card>
+
+          <div className="h-full flex-1">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQzaBPXEkgKUmJseYF3yCTA8W02cTIsZS-rg&s"
+              alt="Goodie preview"
+              className="h-full w-full rounded-lg object-cover"
+            />
+          </div>
+        </div>
 
         {/* IMAGES GRID */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

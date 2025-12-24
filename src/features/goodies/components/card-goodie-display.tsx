@@ -1,6 +1,14 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from '@tanstack/react-router';
 import { Edit, EllipsisVertical, Shirt, Trash } from 'lucide-react';
+import {
+  CircleQuestionMark,
+  Coffee,
+  Handbag,
+  HandMetal,
+  Notebook,
+  Sticker,
+} from 'lucide-react';
 
 import { orpc } from '@/lib/orpc/client';
 
@@ -26,6 +34,16 @@ interface VariantStock {
   color?: string | null;
   stockQty: number;
 }
+
+const categoryIcons: Record<string, React.ElementType> = {
+  TSHIRT: Shirt,
+  HOODIE: HandMetal,
+  STICKER: Sticker,
+  MUG: Coffee,
+  TOTE_BAG: Handbag,
+  NOTEBOOK: Notebook,
+  OTHER: CircleQuestionMark, // icône générique
+};
 
 interface CardGoodieDisplayProps {
   id: string;
@@ -78,6 +96,7 @@ export default function CardGoodieDisplay({
       },
     })
   );
+  const PlaceholderIcon = categoryIcons[category] || CircleQuestionMark;
 
   return (
     <Card className="flex h-full flex-col shadow-lg transition-shadow duration-200 hover:shadow-xl">
@@ -90,7 +109,7 @@ export default function CardGoodieDisplay({
             className="h-full w-full object-contain"
           />
         ) : (
-          <Shirt className="text-gray-400 h-16 w-16" />
+          <PlaceholderIcon className="text-gray-400 h-16 w-16" />
         )}
         <Badge className="text-gray-800 absolute top-2 left-2 bg-white shadow-sm">
           Stock: {stock}
