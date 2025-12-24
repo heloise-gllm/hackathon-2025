@@ -148,9 +148,6 @@ export default function GoodieOrdersTab() {
                 {/* Goodie / Supplier */}
                 <DataListCell>
                   <DataListText className="text-xs text-muted-foreground">
-                    Goodie : {order.goodieId ?? '—'}
-                  </DataListText>
-                  <DataListText className="text-xs text-muted-foreground">
                     Fournisseur : {order.supplierId ?? '—'}
                   </DataListText>
                 </DataListCell>

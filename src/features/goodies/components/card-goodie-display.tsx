@@ -1,14 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from '@tanstack/react-router';
 import { Edit, EllipsisVertical, Shirt, Trash } from 'lucide-react';
-import {
-  CircleQuestionMark,
-  Coffee,
-  Handbag,
-  HandMetal,
-  Notebook,
-  Sticker,
-} from 'lucide-react';
 
 import { orpc } from '@/lib/orpc/client';
 
@@ -34,16 +26,6 @@ interface VariantStock {
   color?: string | null;
   stockQty: number;
 }
-
-const categoryIcons: Record<string, React.ElementType> = {
-  TSHIRT: Shirt,
-  HOODIE: HandMetal,
-  STICKER: Sticker,
-  MUG: Coffee,
-  TOTE_BAG: Handbag,
-  NOTEBOOK: Notebook,
-  OTHER: CircleQuestionMark, // icône générique
-};
 
 interface CardGoodieDisplayProps {
   id: string;
@@ -96,22 +78,23 @@ export default function CardGoodieDisplay({
       },
     })
   );
-  const PlaceholderIcon = categoryIcons[category] || CircleQuestionMark;
 
   return (
     <Card className="flex h-full flex-col shadow-lg transition-shadow duration-200 hover:shadow-xl">
-      {/* IMAGE + STOCK + ACTIONS */}
+      {/* IMAGE */}
       <div className="bg-gray-100 relative flex h-48 w-full items-center justify-center overflow-hidden rounded-t-xl">
         {imageUrl ? (
           <img
             src={imageUrl}
             alt={title}
-            className="h-full w-full object-contain"
+            className="h-full w-72 object-cover"
           />
         ) : (
-          <PlaceholderIcon className="text-gray-400 h-16 w-16" />
+          <Shirt className="text-gray-400 h-16 w-16" />
         )}
-        <Badge className="text-gray-800 absolute top-2 left-2 bg-white shadow-sm">
+
+        {/* Stock en bas à gauche */}
+        <Badge className="text-gray-800 absolute bottom-2 left-2 bg-white shadow-sm">
           Stock: {stock}
         </Badge>
 
@@ -135,7 +118,7 @@ export default function CardGoodieDisplay({
               <Edit className="mr-2 h-4 w-4" />
               Modifier
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => deleteGoodie.mutate({ id: id })}>
+            <DropdownMenuItem onClick={() => deleteGoodie.mutate({ id })}>
               <Trash className="mr-2 h-4 w-4" />
               Supprimer
             </DropdownMenuItem>
@@ -144,49 +127,42 @@ export default function CardGoodieDisplay({
       </div>
 
       {/* HEADER */}
-      <CardHeader className="flex flex-col items-center justify-center px-4 pt-4 text-center">
-        <CardTitle className="text-lg font-semibold">{title}</CardTitle>
-        <CardDescription className="text-gray-500 text-sm">
+      <CardHeader className="flex flex-col items-start px-4 pt-4">
+        <CardTitle className="text-left text-lg font-semibold">
+          {title}
+        </CardTitle>
+        <CardDescription className="text-gray-500 text-left text-sm">
           {year}
         </CardDescription>
+        <div className="mt-1 flex w-full justify-start">
+          <Badge variant="secondary">{category}</Badge>
+        </div>
       </CardHeader>
 
       {/* CONTENT */}
-      <CardContent className="flex flex-col gap-2 px-4 pb-4">
-        <Badge variant="secondary">{category}</Badge>
-        {description && (
-          <p className="text-gray-700 text-center text-sm">{description}</p>
-        )}
+      <CardContent className="flex flex-col gap-2 px-4 pb-2 text-left">
+        {description && <p className="text-gray-700 text-sm">{description}</p>}
       </CardContent>
 
-      {/* FOOTER */}
-      <CardFooter className="flex flex-col items-center gap-2 px-4 pb-4 text-center">
-        {/* Taille + Couleur */}
+      {/* FOOTER - Variants */}
+      <CardFooter className="flex flex-col items-start gap-2 px-4 pb-4 text-left">
         {hasSize && hasColor && variantsBySize && (
-          <div className="flex w-full flex-col items-center justify-center gap-6">
+          <div className="flex flex-col gap-2">
             {Object.entries(variantsBySize).map(([size, colors]) => (
-              <div
-                key={size}
-                className="flex flex-col items-center justify-center gap-3"
-              >
-                <Badge variant="outline" className="w-fit">
-                  Taille {size}
-                </Badge>
-                <div className="flex flex-wrap items-center justify-center gap-2">
-                  {colors.map((c, i) => (
-                    <Badge key={i} variant="secondary">
-                      {c.color}: {c.qty}
-                    </Badge>
-                  ))}
-                </div>
+              <div key={size} className="flex flex-wrap gap-2">
+                <Badge variant="outline">Taille {size}</Badge>
+                {colors.map((c, i) => (
+                  <Badge key={i} variant="secondary">
+                    {c.color}: {c.qty}
+                  </Badge>
+                ))}
               </div>
             ))}
           </div>
         )}
 
-        {/* Taille uniquement */}
         {hasSize && !hasColor && (
-          <div className="flex flex-wrap items-center justify-center gap-2">
+          <div className="flex flex-wrap gap-2">
             {variants?.map((v, i) => (
               <Badge key={i} variant="secondary">
                 {v.size}: {v.stockQty}
@@ -195,9 +171,8 @@ export default function CardGoodieDisplay({
           </div>
         )}
 
-        {/* Couleur uniquement */}
         {!hasSize && hasColor && (
-          <div className="flex flex-wrap items-center justify-center gap-2">
+          <div className="flex flex-wrap gap-2">
             {variants?.map((v, i) => (
               <Badge key={i} variant="secondary">
                 {v.color}: {v.stockQty}
