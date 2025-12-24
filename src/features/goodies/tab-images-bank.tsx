@@ -1,4 +1,5 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import JSConfetti from 'js-confetti';
 import { Download, ImageIcon, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -18,6 +19,14 @@ export default function GoodieAssetsTab() {
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
   const queryClient = useQueryClient();
 
+  const jsConfetti = new JSConfetti();
+  const handleClick = () => {
+    jsConfetti.addConfetti({
+      emojis: ['✨'],
+      confettiNumber: 200,
+    });
+  };
+
   const form = useForm<FormFieldsAsset>({
     defaultValues: {
       name: '',
@@ -35,6 +44,7 @@ export default function GoodieAssetsTab() {
 
   const onSubmit = form.handleSubmit(async (values) => {
     try {
+      handleClick();
       await orpc.asset.createAsset.call(values);
       await queryClient.invalidateQueries({
         queryKey: orpc.asset.getAllAssets.key(),
