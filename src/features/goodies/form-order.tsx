@@ -14,10 +14,7 @@ import { FormFieldsGoodieOrder } from '@/features/goodies/schema';
 const ORDER_TYPE_OPTIONS = [
   { id: 'IDEA', label: 'Idea' },
   { id: 'REQUESTED', label: 'Requested' },
-  { id: 'QUOTED', label: 'Quoted' },
   { id: 'ORDERED', label: 'Ordered' },
-  { id: 'RECEIVED', label: 'Received' },
-  { id: 'CANCELLED', label: 'Cancelled' },
 ] as const;
 
 export const FormGoodieOrder = () => {

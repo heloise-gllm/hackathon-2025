@@ -96,7 +96,7 @@ export const PageGoodiesSuppliers = () => {
                   className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
                 >
                   <Package />
-                  Objets créés
+                  Suivi des commandes
                 </Button>
               </TabsTrigger>
               <TabsTrigger asChild value="imagesBank" className="flex flex-1">
