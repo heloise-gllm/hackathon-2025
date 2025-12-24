@@ -9,6 +9,7 @@ import JSConfetti from 'js-confetti';
 import { Edit, EllipsisVertical, Save, Trash, X } from 'lucide-react';
 import { useState } from 'react';
 import { useForm, useFormContext } from 'react-hook-form';
+import { useRainbow } from 'kikoojs';
 
 import { orpc } from '@/lib/orpc/client';
 
@@ -150,6 +151,12 @@ export const FormIdeaNew = () => {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     })
   );
+
+  const [rainbowRef1] = useRainbow<HTMLDivElement>({ speed: 0.2 });
+  const [rainbowRef2] = useRainbow<HTMLDivElement>({ speed: 0.3 });
+  const [rainbowRef3] = useRainbow<HTMLDivElement>({ speed: 0.4 });
+  const [rainbowRef4] = useRainbow<HTMLDivElement>({ speed: 0.5 });
+
   const jsConfetti = new JSConfetti();
   const handleClick = () => {
     jsConfetti.addConfetti({
@@ -161,8 +168,12 @@ export const FormIdeaNew = () => {
     <>
       <PreventNavigation shouldBlock={form.formState.isDirty} />
       <Form {...form} onSubmit={(values) => goodieIdeaCreate.mutate(values)}>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4" ref={rainbowRef1}>
           Ajouter une nouvelle idée :
+          <div className="flex flex-col gap-4 xs:flex-row" ref={rainbowRef2}>
+            <div className="flex-2">
+              <Card>
+                <CardContent>
           <div className="flex flex-col gap-4 xs:flex-row xs:items-stretch">
             <div className="flex-1">
               <Card className="h-full">
@@ -172,6 +183,12 @@ export const FormIdeaNew = () => {
               </Card>
             </div>
 
+            <div
+              aria-hidden
+              className="mx-auto w-full max-w-64 min-w-48 flex-1"
+              ref={rainbowRef4}
+            >
+              <GiftIcon />
             <div className="flex-1">
               <img
                 src="https://www.billboard.com/wp-content/uploads/2023/05/01-taylor-swift-eras-b-billboard-1548.jpg?w=942&h=623&crop=1"
@@ -188,7 +205,7 @@ export const FormIdeaNew = () => {
           >
             + Ajouter l’idée
           </Button>
-          <div className="mt-2 flex flex-col gap-3">
+          <div className="mt-2 flex flex-col gap-3" ref={rainbowRef2}>
             <div className="text-md font-medium">Liste des idées :</div>
 
             {goodieIdeaList.isPending ? (
@@ -199,7 +216,10 @@ export const FormIdeaNew = () => {
               </div>
             ) : (
               <>
-                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                <div
+                  className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3"
+                  ref={rainbowRef3}
+                >
                   {goodieIdeaList.data?.pages
                     .flatMap((p) => p.items)
                     .map((idea) => (
