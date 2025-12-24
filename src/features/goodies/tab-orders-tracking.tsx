@@ -87,25 +87,38 @@ export default function GoodieOrdersTab() {
     <div className="space-y-6">
       <FormProvider {...form}>
         {/*ADD SUPPLIER*/}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-4">
-              <Package />
-              Nouvelle commande
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4 p-6">
-            <FormGoodieOrder />
-            <Button
-              onClick={() => {
-                handleClick();
-                onSubmit();
-              }}
-            >
-              Ajouter
-            </Button>
-          </CardContent>
-        </Card>
+        <div className="flex flex-col gap-4 xs:h-auto xs:flex-row xs:items-stretch">
+          {/* FORMULAIRE */}
+          <Card className="flex-1 xs:flex-[2]">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-4">
+                <Package />
+                Nouvelle commande
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="flex flex-col justify-between space-y-4 p-6">
+              <FormGoodieOrder />
+              <Button
+                onClick={() => {
+                  handleClick();
+                  onSubmit();
+                }}
+              >
+                Ajouter
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* IMAGE */}
+          <div className="flex-1 xs:flex-1">
+            <img
+              src="/Design sans titre (1).png"
+              alt="Goodie preview"
+              className="h-full max-h-[600px] w-full rounded-lg object-cover"
+            />
+          </div>
+        </div>
+
         <div className="space-y-6">
           <DataList>
             {orders.map((order) => (

@@ -6,10 +6,10 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import JSConfetti from 'js-confetti';
+import { useRainbow } from 'kikoojs';
 import { Edit, EllipsisVertical, Save, Trash, X } from 'lucide-react';
 import { useState } from 'react';
 import { useForm, useFormContext } from 'react-hook-form';
-import { useRainbow } from 'kikoojs';
 
 import { orpc } from '@/lib/orpc/client';
 
@@ -155,7 +155,6 @@ export const FormIdeaNew = () => {
   const [rainbowRef1] = useRainbow<HTMLDivElement>({ speed: 0.2 });
   const [rainbowRef2] = useRainbow<HTMLDivElement>({ speed: 0.3 });
   const [rainbowRef3] = useRainbow<HTMLDivElement>({ speed: 0.4 });
-  const [rainbowRef4] = useRainbow<HTMLDivElement>({ speed: 0.5 });
 
   const jsConfetti = new JSConfetti();
   const handleClick = () => {
