@@ -5,6 +5,7 @@ import {
   useMutation,
   useQueryClient,
 } from '@tanstack/react-query';
+import JSConfetti from 'js-confetti';
 import { GiftIcon } from 'lucide-react';
 import { useForm, useFormContext } from 'react-hook-form';
 
@@ -101,7 +102,13 @@ export const FormIdeaNew = () => {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     })
   );
-
+  const jsConfetti = new JSConfetti();
+  const handleClick = () => {
+    jsConfetti.addConfetti({
+      emojis: ['🧅', '🍑', '🍣'],
+      confettiNumber: 100,
+    });
+  };
   return (
     <>
       <PreventNavigation shouldBlock={form.formState.isDirty} />
@@ -128,6 +135,7 @@ export const FormIdeaNew = () => {
             type="submit"
             loading={goodieIdeaCreate.isPending}
             className="w-full"
+            onClick={handleClick}
           >
             + Ajouter l’idée
           </Button>

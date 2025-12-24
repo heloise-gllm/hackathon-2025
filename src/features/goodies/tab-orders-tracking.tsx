@@ -1,4 +1,5 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import JSConfetti from 'js-confetti';
 import { Package } from 'lucide-react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -75,7 +76,13 @@ export default function GoodieOrdersTab() {
       toast.error('Erreur lors de la création');
     }
   });
-
+  const jsConfetti = new JSConfetti();
+  const handleClick = () => {
+    jsConfetti.addConfetti({
+      emojis: ['🎅🏻', '🎄', '❄'],
+      confettiNumber: 100,
+    });
+  };
   return (
     <div className="space-y-6">
       <FormProvider {...form}>
@@ -89,7 +96,14 @@ export default function GoodieOrdersTab() {
           </CardHeader>
           <CardContent className="space-y-4 p-6">
             <FormGoodieOrder />
-            <Button onClick={onSubmit}>Ajouter</Button>
+            <Button
+              onClick={() => {
+                handleClick();
+                onSubmit();
+              }}
+            >
+              Ajouter
+            </Button>
           </CardContent>
         </Card>
         <div className="space-y-6">
