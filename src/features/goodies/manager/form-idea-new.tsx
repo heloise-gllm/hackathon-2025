@@ -5,10 +5,9 @@ import {
   useMutation,
   useQueryClient,
 } from '@tanstack/react-query';
-
 import JSConfetti from 'js-confetti';
-import { GiftIcon } from 'lucide-react';
-
+import { Edit, EllipsisVertical, GiftIcon, Save, Trash, X } from 'lucide-react';
+import { useState } from 'react';
 import { useForm, useFormContext } from 'react-hook-form';
 
 import { orpc } from '@/lib/orpc/client';
@@ -34,8 +33,6 @@ import {
   GOODIE_CATEGORY_OPTIONS,
   zFormFieldsIdea,
 } from '../schema';
-import { useRouter } from '@tanstack/react-router';
-import { useState } from 'react';
 
 const FormGoodieIdea = () => {
   const form = useFormContext<FormFieldsIdea>();
@@ -79,7 +76,7 @@ const FormGoodieIdea = () => {
 
 export const FormIdeaNew = () => {
   const queryClient = useQueryClient();
-  const router = useRouter();
+
   const form = useForm({
     resolver: zodResolver(zFormFieldsIdea()),
     defaultValues: {
