@@ -1,4 +1,5 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import JSConfetti from 'js-confetti';
 import { Building2 } from 'lucide-react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -69,6 +70,13 @@ export default function GoodieSuppliersTab() {
   if (isLoading) {
     return <div>Chargement des fournisseurs...</div>;
   }
+  const jsConfetti = new JSConfetti();
+  const handleClick = () => {
+    jsConfetti.addConfetti({
+      emojis: ['🎆', '🌠', '🌃'],
+      confettiNumber: 100,
+    });
+  };
 
   return (
     <div className="space-y-6">
@@ -83,7 +91,14 @@ export default function GoodieSuppliersTab() {
           </CardHeader>
           <CardContent className="space-y-4 p-6">
             <FormSupplier />
-            <Button onClick={onSubmit}>Ajouter</Button>
+            <Button
+              onClick={() => {
+                handleClick();
+                onSubmit();
+              }}
+            >
+              Ajouter
+            </Button>
           </CardContent>
         </Card>
 
