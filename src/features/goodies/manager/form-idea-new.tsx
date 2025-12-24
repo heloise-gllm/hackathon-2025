@@ -5,7 +5,9 @@ import {
   useMutation,
   useQueryClient,
 } from '@tanstack/react-query';
-import { GiftIcon, Edit, EllipsisVertical, Save, Trash, X } from 'lucide-react';
+import JSConfetti from 'js-confetti';
+import { Edit, EllipsisVertical, Save, Trash, X } from 'lucide-react';
+import { useState } from 'react';
 import { useForm, useFormContext } from 'react-hook-form';
 import { useRainbow } from 'kikoojs';
 
@@ -32,8 +34,6 @@ import {
   GOODIE_CATEGORY_OPTIONS,
   zFormFieldsIdea,
 } from '../schema';
-import { useRouter } from '@tanstack/react-router';
-import { useState } from 'react';
 
 const FormGoodieIdea = () => {
   const form = useFormContext<FormFieldsIdea>();
@@ -77,7 +77,7 @@ const FormGoodieIdea = () => {
 
 export const FormIdeaNew = () => {
   const queryClient = useQueryClient();
-  const router = useRouter();
+
   const form = useForm({
     resolver: zodResolver(zFormFieldsIdea()),
     defaultValues: {
@@ -157,6 +157,13 @@ export const FormIdeaNew = () => {
   const [rainbowRef3] = useRainbow<HTMLDivElement>({ speed: 0.4 });
   const [rainbowRef4] = useRainbow<HTMLDivElement>({ speed: 0.5 });
 
+  const jsConfetti = new JSConfetti();
+  const handleClick = () => {
+    jsConfetti.addConfetti({
+      emojis: ['🧅', '🍑', '🍣'],
+      confettiNumber: 100,
+    });
+  };
   return (
     <>
       <PreventNavigation shouldBlock={form.formState.isDirty} />
@@ -167,6 +174,10 @@ export const FormIdeaNew = () => {
             <div className="flex-2">
               <Card>
                 <CardContent>
+          <div className="flex flex-col gap-4 xs:flex-row xs:items-stretch">
+            <div className="flex-1">
+              <Card className="h-full">
+                <CardContent className="h-full">
                   <FormGoodieIdea />
                 </CardContent>
               </Card>
@@ -178,12 +189,19 @@ export const FormIdeaNew = () => {
               ref={rainbowRef4}
             >
               <GiftIcon />
+            <div className="flex-1">
+              <img
+                src="https://www.billboard.com/wp-content/uploads/2023/05/01-taylor-swift-eras-b-billboard-1548.jpg?w=942&h=623&crop=1"
+                alt="Goodie preview"
+                className="h-full w-full rounded-lg object-cover"
+              />
             </div>
           </div>
           <Button
             type="submit"
             loading={goodieIdeaCreate.isPending}
             className="w-full"
+            onClick={handleClick}
           >
             + Ajouter l’idée
           </Button>

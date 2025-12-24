@@ -18,7 +18,6 @@ export async function createGoodies() {
   await seedGoodieOrders(goodies, suppliers, users);
   const packs = await seedOnboardingPacks(goodies);
   await seedOnboardingAssignments(packs, users);
-  await seedGoodieGrants(goodies, users);
 
   console.log('✅ Goodies ecosystem seeded');
 }
@@ -164,22 +163,4 @@ async function seedOnboardingAssignments(
   );
 
   console.log('✅ Onboarding assignments created');
-}
-
-async function seedGoodieGrants(goodies: ExplicitAny[], users: ExplicitAny[]) {
-  await Promise.all(
-    users.slice(0, 20).map((user) =>
-      db.goodieGrant.create({
-        data: {
-          userId: user.id,
-          goodieId: goodies[randomInt(goodies.length)].id,
-          variantKey: 'M',
-          quantity: 1,
-          reason: 'Onboarding',
-        },
-      })
-    )
-  );
-
-  console.log('✅ Goodie grants created');
 }

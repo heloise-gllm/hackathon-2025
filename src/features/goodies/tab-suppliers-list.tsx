@@ -1,4 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import JSConfetti from 'js-confetti';
+import { Building2 } from 'lucide-react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
@@ -11,7 +13,6 @@ import { FormFieldsSupplier } from '@/features/goodies/schema';
 
 import CardSupplier from './components/card-supplier';
 import { FormSupplier } from './form-supplier';
-import { Building2 } from 'lucide-react';
 
 export default function GoodieSuppliersTab() {
   const queryClient = useQueryClient();
@@ -69,23 +70,47 @@ export default function GoodieSuppliersTab() {
   if (isLoading) {
     return <div>Chargement des fournisseurs...</div>;
   }
+  const jsConfetti = new JSConfetti();
+  const handleClick = () => {
+    jsConfetti.addConfetti({
+      emojis: ['🎆', '🌠', '🌃'],
+      confettiNumber: 100,
+    });
+  };
 
   return (
     <div className="space-y-6">
       <FormProvider {...form}>
         {/*ADD SUPPLIER*/}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-4">
-              <Building2 />
-              Nouveau fournisseur
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4 p-6">
-            <FormSupplier />
-            <Button onClick={onSubmit}>Ajouter</Button>
-          </CardContent>
-        </Card>
+        <div className="flex flex-col gap-4 xs:h-96 xs:flex-row xs:items-stretch">
+          <Card className="flex min-h-0 flex-1 flex-col">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-4">
+                <Building2 />
+                Nouveau fournisseur
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4 p-6">
+              <FormSupplier />
+              <Button
+                onClick={() => {
+                  handleClick();
+                  onSubmit();
+                }}
+              >
+                Ajouter
+              </Button>
+            </CardContent>
+          </Card>
+
+          <div className="h-full flex-1">
+            <img
+              src="https://static.icy-veins.com/wp/wp-content/uploads/2023/10/DurielD4.jpg"
+              alt="Goodie preview"
+              className="h-full w-full rounded-lg object-cover"
+            />
+          </div>
+        </div>
 
         {/*SUPPLIER LIST*/}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

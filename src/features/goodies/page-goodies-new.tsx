@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCanGoBack, useRouter } from '@tanstack/react-router';
+import JSConfetti from 'js-confetti';
 import { PlusIcon, X } from 'lucide-react';
 import { useEffect } from 'react';
 import {
@@ -141,6 +142,13 @@ export default function PageGoodieNew() {
       },
     })
   );
+  const jsConfetti = new JSConfetti();
+  const handleClick = () => {
+    jsConfetti.addConfetti({
+      emojis: ['🎉', '✨', '💖'],
+      confettiNumber: 100,
+    });
+  };
 
   return (
     <PageLayout>
@@ -156,7 +164,11 @@ export default function PageGoodieNew() {
           <PageLayoutTopBar
             backButton={<BackButton />}
             actions={
-              <Button type="submit" form="goodie-create-form">
+              <Button
+                type="submit"
+                form="goodie-create-form"
+                onClick={() => handleClick()}
+              >
                 Ajouter
               </Button>
             }
